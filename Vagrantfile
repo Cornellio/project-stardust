@@ -3,7 +3,7 @@
 
 # Vagrant environment for "Address book" Java app
 #
-# Useful Vagrant plugins include:
+# These Vagrant plugins may be helpful for this project:
 # - vagrant-cachier, will cache package downloads
 # - vagrant-vbguest, will reinstall virtualbox guest additions as necessary
 # To install those, run:
@@ -15,29 +15,33 @@ Vagrant.configure("2") do |config|
     config.cache.auto_detect = true
   end
 
-  # system tuning:
+  # system tuning for VirtualBox:
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", "756", "--cpus", "2", "--ioapic", "on"]
   end
 
+  # Puppet configuration to support modules and node definitions:
   config.vm.provision "puppet" do |puppet|
     puppet.manifests_path = "puppet/manifests"
     puppet.manifest_file = "site.pp"
     puppet.module_path = "puppet/modules"
   end
 
-  # multi-machine configs:
+  # Setup multiple machines to resemble a production deployment:
+
+  domain = 'stardust.net'
+  rhel_box = 'puppetlabs/centos-6.6-64-puppet-enterprise'
 
   config.vm.define "web" do |node|
-    node.vm.box = "puppetlabs/centos-6.6-64-puppet-enterprise"
-    node.vm.network :private_network, ip: "172.28.128.2", :netmask => "255.255.0.0"
-    node.vm.hostname = "web"
+    node.vm.box = rhel_box
+    node.vm.network :private_network, ip: "172.16.10.2", :netmask => "255.255.0.0"
+    node.vm.hostname = "web" + "." + domain
   end
 
   config.vm.define "db" do |node|
-    node.vm.box = "puppetlabs/centos-6.6-64-puppet-enterprise"
-    node.vm.network :private_network, ip: "172.28.128.3", :netmask => "255.255.0.0"
-    node.vm.hostname = "db"
+    node.vm.box = rhel_box
+    node.vm.network :private_network, ip: "172.16.10.3", :netmask => "255.255.0.0"
+    node.vm.hostname = "db"  + "." + domain
   end
 
 end
