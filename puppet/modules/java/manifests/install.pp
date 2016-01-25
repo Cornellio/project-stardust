@@ -1,8 +1,11 @@
 class java::install {
 
-  file { "${::java::local_src_dir}/${::java::pkg_file}":
-    ensure => file,
-    source => "puppet:///modules/java/${::java::pkg_file}",
+  wget::fetch { "java-pkg":
+    source      => "$::java::pkg_src_url",
+    destination => "${::java::local_src_dir}/${::java::pkg_file}",
+    timeout     => 0,
+    verbose     => false,
+    before      => Package["$::java::pkg_name"],
   }
 
   package { "$::java::pkg_name":
