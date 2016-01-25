@@ -21,6 +21,8 @@ Vagrant.configure("2") do |config|
   end
 
   # Puppet configuration to support modules and node definitions:
+  # config.vm.provision "shell", inline: "puppet module install puppetlabs-stdlib"
+
   config.vm.provision "puppet" do |puppet|
     puppet.manifests_path = "puppet/manifests"
     puppet.manifest_file = "site.pp"
@@ -32,10 +34,10 @@ Vagrant.configure("2") do |config|
   domain = 'stardust.net'
   rhel_box = 'puppetlabs/centos-6.6-64-puppet-enterprise'
 
-  config.vm.define "web" do |node|
+  config.vm.define "app" do |node|
     node.vm.box = rhel_box
     node.vm.network :private_network, ip: "172.16.10.2", :netmask => "255.255.0.0"
-    node.vm.hostname = "web" + "." + domain
+    node.vm.hostname = "app" + "." + domain
   end
 
   config.vm.define "db" do |node|
