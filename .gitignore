@@ -4,3 +4,6 @@
 \.vagrant
 NOTES
 /application
+*\.tar\.gz
+*\.rpm
+
