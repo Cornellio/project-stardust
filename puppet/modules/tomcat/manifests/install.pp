@@ -7,6 +7,14 @@ class tomcat::install {
     '/opt/tomcat/webapps/manager',
     '/opt/tomcat/webapps/ROOT' ]
 
+  # Remove default tomcat webapps
+  file { [$default_webapps_dirs]:
+    ensure    => "absent",
+    recurse   => "true",
+    force     => "true",
+    subscribe => Exec["extract-tomcat-pkg"],
+  }
+
   file { "/etc/init.d/tomcat":
     ensure => "present",
     owner  => 0,
@@ -26,13 +34,12 @@ class tomcat::install {
     gid     => '99'
   }
 
-  file { "tomcat-pkg":
-    path      => "/usr/local/src/apache-tomcat-7.0.42.tar.gz",
-    source    => "puppet:///modules/tomcat/apache-tomcat-7.0.42.tar.gz",
-    ensure    => "file",
-    owner     => "root",
-    group     => "root",
-    mode      => "0644",
+  wget::fetch { "tomcat-pkg":
+    source      => 'https://github.com/Cornellio/project-stardust/releases/download/v0.1/apache-tomcat-7.0.42.tar.gz',
+    destination => '/usr/local/src/apache-tomcat-7.0.42.tar.gz',
+    timeout     => 0,
+    verbose     => false,
+    before      => Exec["extract-tomcat-pkg"],
   }
 
   exec { "extract-tomcat-pkg":
@@ -40,8 +47,6 @@ class tomcat::install {
     path          => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
     refreshonly   => "false",
     creates       => "/opt/tomcat",
-    require       => File["tomcat-pkg"],
-    subscribe     => File["tomcat-pkg"],
   }
 
   exec { "chkconfig":
@@ -59,14 +64,6 @@ class tomcat::install {
   exec { "setcap-java-lib":
     command => "/bin/echo $(/bin/find /usr/java -name jli -type d) > /etc/ld.so.conf.d/java-libjli.conf && /sbin/ldconfig -v > /dev/null 2>&1",
     creates => "/etc/ld.so.conf.d/java-libjli.conf",
-  }
-
-  # Remove Tomcat default webapps
-  file { [$default_webapps_dirs]:
-    ensure    => "absent",
-    recurse   => "true",
-    force     => "true",
-    subscribe => Exec["extract-tomcat-pkg"],
   }
 
 }
