@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="5" status="debug" strict="true">
+	<Appenders>
+		<RollingFile name="web3" fileName="${sys:catalina.home}/logs/web3.log"
+			filePattern="${sys:catalina.home}/logs/$${date:yyyy-MM-dd}/web3-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout
+				pattern="%d{dd/MM/yyyy HH:mm:ss,SSS} [%X{cartID}] [%X{sessionId}] [%p] [%t] [%c] (%F:%L)  - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="ws" fileName="${sys:catalina.home}/logs/ws.log"
+			filePattern="${sys:catalina.home}/logs/$${date:yyyy-MM-dd}/ws-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout
+				pattern="%d{dd/MM/yyyy HH:mm:ss,SSS} [%X{cartID}] [%X{sessionId}] [%p] [%t] [%c] (%F:%L)  - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="perf" fileName="${sys:catalina.home}/logs/perf.log"
+			filePattern="${sys:catalina.home}/logs/$${date:yyyy-MM-dd}/perf-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout
+				pattern="%d{dd/MM/yyyy HH:mm:ss,SSS} [%X{cartID}] [%X{sessionId}] [%p] [%t] [%c] (%F:%L)  - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="sessionpool"
+			fileName="${sys:catalina.home}/logs/sessionpool.log" filePattern="${sys:catalina.home}/logs/$${date:yyyy-MM-dd}/sessionpool-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout
+				pattern="%d{dd/MM/yyyy HH:mm:ss,SSS} [%X{cartID}] [%X{sessionId}] [%p] [%t] [%c] (%F:%L)  - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="json" fileName="${sys:catalina.home}/logs/json.log"
+			filePattern="${sys:catalina.home}/logs/$${date:yyyy-MM-dd}/json-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout
+				pattern="%d{dd/MM/yyyy HH:mm:ss,SSS} [%X{cartID}] [%X{sessionId}] [%p] [%t] [%c] (%F:%L)  - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="scenario" fileName="${sys:catalina.home}/logs/scenario.log"
+			filePattern="${sys:catalina.home}/logs/$${date:yyyy-MM-dd}/scenario-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout
+				pattern="%d{dd/MM/yyyy HH:mm:ss,SSS} [%X{cartID}] [%X{sessionId}] [%p] [%t] [%c] (%F:%L)  - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="dao" fileName="${sys:catalina.home}/logs/dao.log"
+			filePattern="${sys:catalina.home}/logs/$${date:yyyy-MM-dd}/dao-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout
+				pattern="%d{dd/MM/yyyy HH:mm:ss,SSS} [%X{cartID}] [%X{sessionId}] [%p] [%t] [%c] (%F:%L)  - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="riak" fileName="${sys:catalina.home}/logs/riak.log"
+			filePattern="${sys:catalina.home}/logs/$${date:yyyy-MM-dd}/riak-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout
+				pattern="%d{dd/MM/yyyy HH:mm:ss,SSS} [%X{cartID}] [%X{sessionId}] [%p] [%t] [%c] (%F:%L)  - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="memcache" fileName="${sys:catalina.home}/logs/memcache.log"
+			filePattern="${sys:catalina.home}/logs/$${date:yyyy-MM-dd}/memcache-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout
+				pattern="%d{dd/MM/yyyy HH:mm:ss,SSS} [%X{cartID}] [%X{sessionId}] [%p] [%t] [%c] (%F:%L)  - %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="com.virginamerica.web3.gateway.sabre.SSSAdvShopGateway" level="fatal" additivity="false">
+   			<Appender-Ref ref="web3" />
+		</Logger>
+		<Logger name="com.virginamerica" level="info" additivity="false">
+			<Appender-Ref ref="web3" />
+		</Logger>
+		<Logger name="com.virginamerica.web3.gateway.BaseGateway"
+			level="info" additivity="false">
+			<Appender-Ref ref="ws" />
+		</Logger>
+		<Logger name="com.virginamerica.web3.guice.aop.PerformaceLogCheck"
+			level="debug" additivity="false">
+			<Appender-Ref ref="perf" />
+		</Logger>
+		<Logger name="com.virginamerica.sessionpool" level="debug" activity="false" additivity="false">
+			<Appender-Ref ref="sessionpool" />
+		</Logger>
+		<Logger name="com.virginamerica.sessionpool.web3.service.CommonPoolService" level="warn" additivity="false">
+			<Appender-Ref ref="sessionpool" />
+		</Logger>
+		<Logger name="org.apache.commons.pool2" level="info" additivity="false">
+			<Appender-Ref ref="sessionpool" />
+		</Logger>
+		<Logger name="com.virginamerica.web3.guice.aop.SessionMgnt" level="debug" additivity="false">
+			<Appender-Ref ref="sessionpool" />
+		</Logger>
+		<Logger name="ControllerInterceptor.json" level="info" additivity="false">
+			<Appender-Ref ref="json" />
+		</Logger>
+		<Logger
+			name="com.virginamerica.web3.common.logging.AppRequestResponseLogger"
+			level="debug" additivity="false">
+			<Appender-Ref ref="json" />
+		</Logger>
+		<Logger
+			name="com.virginamerica.web3.web.gson.GsonHttpMessageConverter"
+			level="debug" additivity="false">
+			<Appender-Ref ref="json" />
+		</Logger>
+		<Logger name="com.virginamerica.web3.common.logging.GatewayScenarioLogger"
+			level="warn" additivity="false">
+			<Appender-Ref ref="scenario" />
+		</Logger>
+		<Logger name="com.virginamerica.web3.common.logging.GatewaySRMgr"
+			level="warn" additivity="false">
+			<Appender-Ref ref="scenario" />
+		</Logger>
+		<Logger name="ControllerInterceptor.perf" level="debug" additivity="false">
+			<Appender-Ref ref="perf" />
+		</Logger>
+		<Logger name="com.virginamerica.web3.dao" level="info" additivity="false">
+			<Appender-Ref ref="dao" />
+		</Logger>
+		<Logger name="com.virginamerica.service.RiakService" level="debug" additivity="false">
+			<Appender-Ref ref="riak" />
+		</Logger>
+		<Logger name="com.virginamerica.service.memcache.MemcachedService" level="debug" additivity="false">
+			<Appender-Ref ref="memcache" />
+		</Logger>
+		<Root level="error">
+			<Appender-Ref ref="web3" />
+		</Root>
+	</Loggers>
+</Configuration>
