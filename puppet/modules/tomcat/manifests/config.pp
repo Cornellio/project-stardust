@@ -15,12 +15,14 @@ class tomcat::config {
 
   file { "/opt/tomcat/conf/context.xml":
     ensure => "present",
+    require => Class["tomcat::install"],
     content => template("tomcat/context.xml.erb"),
   }
 
   file { "/opt/tomcat/bin/setenv.sh":
     ensure  => "present",
     content => template("tomcat/setenv.sh.erb"),
+    require => Class["tomcat::install"],
     notify  => Service["tomcat"],
   }
 
