@@ -6,6 +6,8 @@ node default {
 
 node 'app01' {
 
+  # Tomcat configuration
+  #
   class { 'java': }->
   class { 'tomcat::params':
     http_connector_port         => '9000',
@@ -19,6 +21,8 @@ node 'app01' {
   class { 'tomcat::config': }->
   class { 'tomcat::service': }
 
+  # Nginx configuration
+  #
   include'nginx'
 
   nginx::resource::upstream { 'app01.stardust.net':
@@ -31,8 +35,6 @@ node 'app01' {
   }
 
   # Mysql configuration
-  # Custom options for my.cnf,
-  # with example of setting the bind address
   #
   $override_options = {
     'mysqld' => {
@@ -51,6 +53,33 @@ node 'app01' {
     password => 'demodemo',
     host     => '172.21.10.2',
     grant    => 'ALL',
+  }
+
+  # Firewall rules
+  # Only allow inbound SSH and HTTP
+  #
+  resources { 'firewall':
+    purge => true,
+  }
+
+  Firewall {
+    before  => Class['firewall::post'],
+    require => Class['firewall::pre'],
+  }
+
+  class { ['firewall::pre', 'firewall::post']: }
+
+  class { 'firewall': }
+
+  firewall { '004 Allow inbound SSH':
+    dport   => 22,
+    proto   => tcp,
+    action  => accept,
+  }->
+  firewall { '005 Allow inbound HTTP':
+    dport   => 80,
+    proto   => tcp,
+    action  => accept,
   }
 
 }
