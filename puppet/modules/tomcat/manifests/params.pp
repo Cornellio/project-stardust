@@ -12,21 +12,21 @@ class tomcat::params (
   $xjavaopts           = "", # Allows supplying misc. java options
 
   # Global database connection settings
-  $mysql_datasource_managed     = 'undef',
-  $mysql_datasource_name,
+  $mysql_datasource_managed     = undef,
+  $mysql_datasource_name        = undef,
   $mysql_datasource_host        = 'localhost',
   $mysql_datasource_port        = '3306',
-  $mysql_datasource_dbname,
-  $mysql_datasource_username,
-  $mysql_datasource_password,
+  $mysql_datasource_dbname      = undef,
+  $mysql_datasource_username    = undef,
+  $mysql_datasource_password    = undef,
   $mysql_datasource_max_active  = '100',
   $mysql_datasource_max_idle    = '20',
   $mysql_datasource_min_idle    = '5',
   $mysql_datasource_max_wait    = '10000',
 
-  # Remote deployment values
-  $remote_deployment_enable    = 'undef',
-  $deployer_username           = 'undef',
-  $deployer_password           = 'undef',
+  # Remote deployment parameters
+  $remote_deployment_enable    = undef,
+  $deployer_username           = undef,
+  $deployer_password           = undef,
 
   ) {}
