@@ -55,15 +55,4 @@ class tomcat::install {
     path    => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
     require => File["/etc/init.d/tomcat"],
   }
-
-  # Setcap permits java to use privileged ports (1024 and below) when run as non-root user
-  exec { "setcap-java-bin":
-    command => "/usr/sbin/setcap cap_net_bind_service+ep /usr/java/default/bin/java",
-    unless  => "/usr/sbin/getcap /usr/java/default/bin/java | /bin/grep -F cap_net_bind_service+ep",
-  }
-  exec { "setcap-java-lib":
-    command => "/bin/echo $(/bin/find /usr/java -name jli -type d) > /etc/ld.so.conf.d/java-libjli.conf && /sbin/ldconfig -v > /dev/null 2>&1",
-    creates => "/etc/ld.so.conf.d/java-libjli.conf",
-  }
-
 }
