@@ -48,11 +48,4 @@ class tomcat::install {
     refreshonly   => "false",
     creates       => "/opt/tomcat",
   }
-
-  exec { "chkconfig":
-    command => "/sbin/chkconfig --level 2345 tomcat on",
-    unless  => "/sbin/chkconfig | /bin/grep 'tomcat.*[2-5]:on'",
-    path    => "/usr/bin:/usr/sbin:/bin:/usr/local/bin",
-    require => File["/etc/init.d/tomcat"],
-  }
 }
