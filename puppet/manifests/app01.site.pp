@@ -24,7 +24,7 @@ node 'app01' {
   class { 'tomcat::config': }->
   class { 'tomcat::service': }
 
-  include 'webapp::granny'
+  # include 'webapp::granny'
 
   # Nginx configuration
   #
@@ -84,6 +84,12 @@ node 'app01' {
   firewall { '005 Allow inbound HTTP':
     dport   => 80,
     proto   => tcp,
+    action  => accept,
+  }
+  firewall { '006 Allow inbound HTTP for Jenkins deployment only':
+    dport   => 9000,
+    proto   => tcp,
+    source  => '172.21.10.21',
     action  => accept,
   }
 }
