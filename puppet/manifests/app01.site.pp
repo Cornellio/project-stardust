@@ -24,6 +24,8 @@ node 'app01' {
   class { 'tomcat::config': }->
   class { 'tomcat::service': }
 
+  include 'webapp::granny'
+
   # Nginx configuration
   #
   include'nginx'
