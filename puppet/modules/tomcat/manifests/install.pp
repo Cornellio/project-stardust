@@ -1,14 +1,14 @@
 class tomcat::install {
 
-  $default_webapps_dirs = [
+  $default_webapps_dirs_removed = [
     '/opt/tomcat/webapps/docs',
     '/opt/tomcat/webapps/examples',
     '/opt/tomcat/webapps/host-manager',
-    '/opt/tomcat/webapps/manager',
     '/opt/tomcat/webapps/ROOT' ]
 
-  # Remove default tomcat webapps
-  file { [$default_webapps_dirs]:
+  # Remove most default tomcat webapps, while
+  # keeping the manager tool to enable Jenkins deployments
+  file { [$default_webapps_dirs_removed]:
     ensure    => "absent",
     recurse   => "true",
     force     => "true",
