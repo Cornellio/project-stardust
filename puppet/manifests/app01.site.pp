@@ -16,6 +16,9 @@ node 'app01' {
     mysql_datasource_dbname     => 'grannydb',
     mysql_datasource_username   => 'demo',
     mysql_datasource_password   => 'demodemo',
+    remote_deployment_enable    => 'true',
+    deployer_username           => 'deployer',
+    deployer_password           => 'zeus',
   }->
   class { 'tomcat::install': }->
   class { 'tomcat::config': }->
