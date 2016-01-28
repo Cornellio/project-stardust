@@ -24,4 +24,9 @@ class tomcat::params (
   $mysql_datasource_min_idle    = '5',
   $mysql_datasource_max_wait    = '10000',
 
+  # Remote deployment values
+  $remote_deployment_enable    = 'undef',
+  $deployer_username           = 'undef',
+  $deployer_password           = 'undef',
+
   ) {}
