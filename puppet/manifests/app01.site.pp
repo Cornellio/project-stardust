@@ -6,8 +6,8 @@ node default {
 
 node 'app01' {
 
-  # Tomcat configuration
-  #
+  ## Tomcat configuration
+
   class { 'java': }->
   class { 'tomcat::params':
     http_connector_port         => '9000',
@@ -24,11 +24,11 @@ node 'app01' {
   class { 'tomcat::config': }->
   class { 'tomcat::service': }
 
-  # include 'webapp::granny'
+  include webapp::granny
 
-  # Nginx configuration
-  #
-  include'nginx'
+  ## Nginx configuration
+
+  include nginx
 
   nginx::resource::upstream { 'app01.stardust.net':
     members => [
@@ -39,8 +39,8 @@ node 'app01' {
     proxy => 'http://app01.stardust.net',
   }
 
-  # Mysql configuration
-  #
+  ## Mysql configuration
+
   $override_options = {
     'mysqld' => {
       'bind-address' => '172.21.10.2'
@@ -60,9 +60,17 @@ node 'app01' {
     grant    => 'ALL',
   }
 
-  # Firewall rules
+  ## SSH configuration
+
+  class { 'ssh':
+    permit_root_login         => 'no',
+    password_authentication   => 'no',
+    allow_users               => 'vagrant',
+  }
+
+  ## Firewall rules
+
   # Only allow inbound SSH and HTTP
-  #
   resources { 'firewall':
     purge => true,
   }
@@ -86,7 +94,7 @@ node 'app01' {
     proto   => tcp,
     action  => accept,
   }
-  firewall { '006 Allow inbound HTTP for Jenkins deployment only':
+  firewall { '006 Allow inbound HTTP port 9000 only from Jenkins':
     dport   => 9000,
     proto   => tcp,
     source  => '172.21.10.21',

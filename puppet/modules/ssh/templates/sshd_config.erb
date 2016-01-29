@@ -1,0 +1,16 @@
+# File is managed by Puppet
+
+PermitRootLogin <%= scope.lookupvar("::ssh::permit_root_login") %>
+PasswordAuthentication <%= scope.lookupvar("::ssh::password_authentication") %>
+<% if scope.lookupvar("::ssh::allow_users") != "undef" -%>
+AllowUsers <%= scope.lookupvar("::ssh::allow_users") %>
+<% end -%>
+
+AcceptEnv LANG LC_*
+ChallengeResponseAuthentication no
+GSSAPIAuthentication no
+PrintMotd no
+Subsystem sftp /usr/libexec/openssh/sftp-server
+UseDNS no
+UsePAM yes
+X11Forwarding yes
