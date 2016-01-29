@@ -11,5 +11,21 @@ The stack features:
 * The sample Java Address Book app, *Granny* from [cumulogic](http://www.cumulogic.com/downloads/sample-applications/)
 * An Nginx front-end web server
 
+Two systems are configured in the Vagrantfile:
 
-> *In memory of David Bowie*
+ `app01.stardust.net` - The applicaiton server running the Address Book app on Tomcat. Mysql server also runs here.
+
+`deployer.stardust.net` - A bare Tomcat server for hosting Jenkins CI. This is used for doing deployments to `app01`. The deployment job is not automatically configured. To setup Jenkins, drop a jenkins.war package into `/opt/tomcat/webapps`. Jenkins will be running on port 8080.
+
+## Setup
+
+The app server can be tested on it's own without using Jenkins for deployment. To do so just deploy the app server:
+
+`vagrant up app01`
+
+Then create a hosts entry `www.stardust.net` for IP `172.21.10.2` and access the app in your browser at http://www.stardust.net/granny/
+
+If you run `vagrant up` without specifying a host name will deploy both systems, but as noted above Jenkins requires additional setup.
+
+
+*In memory of David Bowie*
