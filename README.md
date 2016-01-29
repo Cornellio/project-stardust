@@ -19,7 +19,7 @@ Two systems are configured in the Vagrantfile:
 
 ## Setup
 
-The app server can be tested on it's own without using Jenkins for deployment. To do so just deploy the app server:
+The app server can be tested on its own without using Jenkins for deployment. To do so just deploy the app server:
 
 `vagrant up app01`
 
