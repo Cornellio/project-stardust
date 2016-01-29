@@ -25,7 +25,7 @@ The app server can be tested on it's own without using Jenkins for deployment. T
 
 Then create a hosts entry `www.stardust.net` for IP `172.21.10.2` and access the app in your browser at http://www.stardust.net/granny/
 
-If you run `vagrant up` without specifying a host name will deploy both systems, but as noted above Jenkins requires additional setup.
+If you run `vagrant up` without specifying a host name both systems will be provisioned, but as noted above Jenkins requires additional setup before it can deploy war files to the app server.
 
 
 *In memory of David Bowie*
