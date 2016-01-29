@@ -16,6 +16,16 @@ class firewall (
   $service_name = $::firewall::params::service_name,
   $package_name = $::firewall::params::package_name,
 ) inherits ::firewall::params {
+
+  resources { 'firewall':
+    purge => true,
+  }
+  Firewall {
+    before  => Class['firewall::post'],
+    require => Class['firewall::pre'],
+  }
+  class { ['firewall::pre', 'firewall::post']: }
+
   case $ensure {
     /^(running|stopped)$/: {
       # Do nothing.

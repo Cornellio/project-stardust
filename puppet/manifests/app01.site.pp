@@ -70,20 +70,9 @@ node 'app01' {
 
   ## Firewall rules
 
+  include firewall
+
   # Only allow inbound SSH and HTTP
-  resources { 'firewall':
-    purge => true,
-  }
-
-  Firewall {
-    before  => Class['firewall::post'],
-    require => Class['firewall::pre'],
-  }
-
-  class { ['firewall::pre', 'firewall::post']: }
-
-  class { 'firewall': }
-
   firewall { '004 Allow inbound SSH':
     dport   => 22,
     proto   => tcp,
@@ -93,7 +82,7 @@ node 'app01' {
     dport   => 80,
     proto   => tcp,
     action  => accept,
-  }
+  }->
   firewall { '006 Allow inbound HTTP port 9000 only from Jenkins':
     dport   => 9000,
     proto   => tcp,

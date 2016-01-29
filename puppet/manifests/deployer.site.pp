@@ -6,6 +6,8 @@ node default {
 
 node 'deployer' {
 
+  ## Tomcat configuration
+
   class { 'java': }->
   class { 'tomcat::params':
     http_connector_port => '8080',
@@ -14,22 +16,11 @@ node 'deployer' {
   class { 'tomcat::config': }->
   class { 'tomcat::service': }
 
-  # Firewall rules
+  ## Firewall rules
+
+  include firewall
+
   # Only allow inbound SSH and HTTP
-  #
-  resources { 'firewall':
-    purge => true,
-  }
-
-  Firewall {
-    before  => Class['firewall::post'],
-    require => Class['firewall::pre'],
-  }
-
-  class { ['firewall::pre', 'firewall::post']: }
-
-  class { 'firewall': }
-
   firewall { '004 Allow inbound SSH':
     dport   => 22,
     proto   => tcp,
