@@ -1,5 +1,6 @@
 # File is managed by Puppet
 
+Protocol 2
 PermitRootLogin <%= scope.lookupvar("::ssh::permit_root_login") %>
 PasswordAuthentication <%= scope.lookupvar("::ssh::password_authentication") %>
 <% if scope.lookupvar("::ssh::allow_users") != "undef" -%>
