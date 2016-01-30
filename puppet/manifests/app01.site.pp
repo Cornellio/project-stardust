@@ -6,6 +6,14 @@ node default {
 
 node 'app01' {
 
+  ## Host based security restrictions via TCP wrappers
+
+  class { 'security':
+    service => 'sshd',
+    allow   => '10.0.2.',
+    deny    => 'ALL',
+  }
+
   ## Tomcat configuration
 
   class { 'java': }->
