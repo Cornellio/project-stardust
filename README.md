@@ -1,7 +1,9 @@
 Project Stardust
 ================
 
-This is a sample project for spinning up a basic stack for a Java app.
+*Dedicated to Ziggy Stardust and other losers of the world*
+
+This is a sample project for spinning up a basic stack for a Java web app.
 
 The stack features:
 
@@ -27,5 +29,3 @@ Then create a hosts entry `www.stardust.net` for IP `172.21.10.2` and access the
 
 If you run `vagrant up` without specifying a host name both systems will be provisioned, but as noted above Jenkins requires additional setup before it can deploy war files to the app server.
 
-
-*In memory of David Bowie*
